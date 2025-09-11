@@ -29,7 +29,26 @@ class MainEngine(OriginalMainEngine):
         Init all engines.
         """
         self.add_engine(LogEngine)
-        self.add_engine(OmsEngine)
+        oms_engine: OmsEngine = self.add_engine(OmsEngine)
+        self.get_tick: Callable[[str], TickData | None] = oms_engine.get_tick
+        self.get_order: Callable[[str], OrderData | None] = oms_engine.get_order
+        self.get_trade: Callable[[str], TradeData | None] = oms_engine.get_trade
+        self.get_position: Callable[[str], PositionData | None] = oms_engine.get_position
+        self.get_account: Callable[[str], AccountData | None] = oms_engine.get_account
+        self.get_contract: Callable[[str], ContractData | None] = oms_engine.get_contract
+        self.get_quote: Callable[[str], QuoteData | None] = oms_engine.get_quote
+        self.get_all_ticks: Callable[[], list[TickData]] = oms_engine.get_all_ticks
+        self.get_all_orders: Callable[[], list[OrderData]] = oms_engine.get_all_orders
+        self.get_all_trades: Callable[[], list[TradeData]] = oms_engine.get_all_trades
+        self.get_all_positions: Callable[[], list[PositionData]] = oms_engine.get_all_positions
+        self.get_all_accounts: Callable[[], list[AccountData]] = oms_engine.get_all_accounts
+        self.get_all_contracts: Callable[[], list[ContractData]] = oms_engine.get_all_contracts
+        self.get_all_quotes: Callable[[], list[QuoteData]] = oms_engine.get_all_quotes
+        self.get_all_active_orders: Callable[[], list[OrderData]] = oms_engine.get_all_active_orders
+        self.get_all_active_quotes: Callable[[], list[QuoteData]] = oms_engine.get_all_active_quotes
+        self.update_order_request: Callable[[OrderRequest, str, str], None] = oms_engine.update_order_request
+        self.convert_order_request: Callable[[OrderRequest, str, bool, bool], list[OrderRequest]] = oms_engine.convert_order_request
+        self.get_converter: Callable[[str], OffsetConverter | None] = oms_engine.get_converter
         self.add_engine(EmailEngine)
         self.add_engine(TelegramEngine)
 
